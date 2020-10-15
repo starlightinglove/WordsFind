@@ -1,0 +1,14 @@
+# ninja log v5
+7	1021	1602775212	CMakeFiles/Native.dir/predictor_output.cpp.o	1a27647ce9d94e62
+6	1024	1602775212	CMakeFiles/Native.dir/predictor_input.cpp.o	b0e3eaa52ecd7325
+5	1282	1602775212	CMakeFiles/Native.dir/ppredictor.cpp.o	24c87720b25b0ea
+3	2243	1602775213	CMakeFiles/Native.dir/ocr_db_post_process.cpp.o	ce2116333c827a0f
+1	2503	1602775214	CMakeFiles/Native.dir/ocr_clipper.cpp.o	80d65eb6c1bd5ff5
+8	2742	1602775214	CMakeFiles/Native.dir/preprocess.cpp.o	64dffe20797f32b2
+1	2868	1602775214	CMakeFiles/Native.dir/ocr_cls_process.cpp.o	55ac0cfe33a233b7
+2	2917	1602775214	CMakeFiles/Native.dir/ocr_crnn_process.cpp.o	70a1ae17f7e210ce
+1	3023	1602775214	CMakeFiles/Native.dir/native.cpp.o	416e3373f6158fcc
+4	3032	1602775214	CMakeFiles/Native.dir/ocr_ppredictor.cpp.o	7f4ea6e5da6bc8cc
+3032	4033	1602775215	/Users/tyhj/AndroidStudioProjects/WordFind/wordFindlibrary/build/intermediates/cmake/debug/obj/arm64-v8a/libNative.so	a38f9977a540dad4
+2	1816	1602775894	CMakeFiles/Native.dir/native.cpp.o	416e3373f6158fcc
+1816	2540	1602775895	/Users/tyhj/AndroidStudioProjects/WordFind/wordFindlibrary/build/intermediates/cmake/debug/obj/arm64-v8a/libNative.so	a38f9977a540dad4

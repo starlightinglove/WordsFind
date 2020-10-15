@@ -1,0 +1,3 @@
+/Users/tyhj/AndroidStudioProjects/WordFind/wordFindlibrary/.cxx/cmake/release/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/tyhj/AndroidStudioProjects/WordFind/wordFindlibrary/.cxx/cmake/release/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/tyhj/AndroidStudioProjects/WordFind/wordFindlibrary/.cxx/cmake/release/arm64-v8a/CMakeFiles/Native.dir

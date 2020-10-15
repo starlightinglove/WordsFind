@@ -1,0 +1,3 @@
+include ':wordFindlibrary'
+include ':app'
+rootProject.name = "WordFind"
