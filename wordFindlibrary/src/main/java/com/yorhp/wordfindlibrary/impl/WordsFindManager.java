@@ -42,7 +42,7 @@ public class WordsFindManager {
      * @param context
      */
     public void init(Context context) {
-        loadModel(context);
+        //loadModel(context);
         this.context=context;
     }
 
@@ -86,19 +86,16 @@ public class WordsFindManager {
      * @return
      */
     public synchronized List<Rect> findWords(Bitmap image,String words) {
-        if (image != null && predictor.isLoaded()) {
-            predictor.setInputImage(image);
-            List<Rect> rects = new ArrayList<>();
-            List<OcrResult> results = runModel(image);
-            if (results != null) {
-                for (OcrResult ocrResult : results) {
-                    Log.i("WordsFindManager",ocrResult.getTxt());
-                    if(ocrResult.getTxt().contains(words)){
-                        rects.add(ocrResult.getRect());
-                    }
+        List<Rect> rects = new ArrayList<>();
+        List<OcrResult> results = runModel(image);
+        if (results != null) {
+            for (OcrResult ocrResult : results) {
+                Log.i("WordsFindManager",ocrResult.getTxt());
+                if(ocrResult.getTxt().contains(words)){
+                    rects.add(ocrResult.getRect());
                 }
-                return rects;
             }
+            return rects;
         }
         return null;
     }
