@@ -37,17 +37,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ivBg = findViewById(R.id.ivBg);
         try {
-            template = BitmapFactory.decodeStream(getAssets().open("test2.jpg"));
+            template = BitmapFactory.decodeStream(getAssets().open("test3.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         ivBg.setImageBitmap(template);
 
         requestAllPermissions();
-        AppExecutors.getInstance().networkIO().execute(() -> {
-            //初始化工具
-            WordsFindManager.getInstance().init(getApplicationContext());
-        });
+        //初始化工具
+        WordsFindManager.getInstance().init(getApplicationContext());
 
 
         findViewById(R.id.btnHello).setOnClickListener((v) -> {
@@ -65,20 +63,33 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
+     * 森林界面能量最高的高度
+     */
+    private static final float START_HEIGHT_TOP_SCALE = 0.23F;
+
+    /**
+     * 森林界面能量最低的高度
+     */
+    private static final float START_HEIGHT_BOTTOM_SCALE = 0.44F;
+
+    /**
      * 找到相应的文字的位置
      * @param words
      */
     private void findWords(String words) {
-        AppExecutors.getInstance().networkIO().execute(() -> {
+        AppExecutors.getInstance().diskIO().execute(() -> {
             try {
+                int height=template.getHeight();
+                //裁剪出识别区域
+                Bitmap wordsBitmap = FileUtil.cropBitmapY(template, START_HEIGHT_TOP_SCALE, 1 - START_HEIGHT_BOTTOM_SCALE);
+                //获取文字所在的区域
+                List<Rect> rects = WordsFindManager.getInstance().findWords(wordsBitmap, words);
 
-                //找到文字对应的位置
-                List<Rect> rects = WordsFindManager.getInstance().findWords(template, words);
                 if (rects == null || rects.size() == 0) {
                     return;
                 }
                 //画出文字位置
-                Bitmap bitmap1 = template.copy(Bitmap.Config.ARGB_8888, true);
+                Bitmap bitmap1 = wordsBitmap.copy(Bitmap.Config.ARGB_8888, true);
                 for (Rect rect : rects) {
                     Log.i("MainActivity", rect.toString());
                     FileUtil.drawRect(bitmap1, rect, Color.argb(150, 180, 52, 217));
@@ -97,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
      * 找到所有文字
      */
     private void findAllwords() {
-        AppExecutors.getInstance().networkIO().execute(() -> {
+        AppExecutors.getInstance().diskIO().execute(() -> {
             try {
                 //文字识别返回文字内容及位置
                 List<OcrResult> rects = WordsFindManager.getInstance().runModel(template);

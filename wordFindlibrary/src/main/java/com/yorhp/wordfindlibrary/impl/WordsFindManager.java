@@ -29,7 +29,9 @@ public class WordsFindManager {
     private static final float[] inputStd = Utils.parseFloatsFromString("0.229,0.224,0.225", ",");
     private static final float scoreThreshold = 0.1F;
 
-    protected Predictor predictor = new Predictor();
+    protected volatile Predictor predictor = new Predictor();
+
+    private Context context;
 
     private WordsFindManager() {
     }
@@ -41,6 +43,7 @@ public class WordsFindManager {
      */
     public void init(Context context) {
         loadModel(context);
+        this.context=context;
     }
 
     /**
@@ -60,13 +63,16 @@ public class WordsFindManager {
      * @param image
      * @return
      */
-    public List<OcrResult> runModel(Bitmap image) {
+    public synchronized List<OcrResult> runModel(Bitmap image) {
         if (image != null && predictor.isLoaded()) {
             predictor.setInputImage(image);
-            return predictor.runModel();
+            return runModel();
         }
         return null;
     }
+
+
+
 
 
     /**
@@ -74,11 +80,11 @@ public class WordsFindManager {
      * @param image
      * @return
      */
-    public List<Rect> findWords(Bitmap image,String words) {
+    public synchronized List<Rect> findWords(Bitmap image,String words) {
         if (image != null && predictor.isLoaded()) {
             predictor.setInputImage(image);
             List<Rect> rects = new ArrayList<>();
-            List<OcrResult> results = predictor.runModel();
+            List<OcrResult> results = runModel();
             if (results != null) {
                 for (OcrResult ocrResult : results) {
                     Log.i("WordsFindManager",ocrResult.getTxt());
@@ -115,6 +121,19 @@ public class WordsFindManager {
                 inputColorFormat,
                 inputShape, inputMean,
                 inputStd, scoreThreshold);
+    }
+
+    /**
+     * 运行文字识别
+     * @return
+     */
+    private synchronized List<OcrResult> runModel(){
+        List<OcrResult> results = predictor.runModel();
+        //释放资源
+        predictor.releaseModel();
+        //重新加载
+        loadModel(context);
+        return results;
     }
 
 

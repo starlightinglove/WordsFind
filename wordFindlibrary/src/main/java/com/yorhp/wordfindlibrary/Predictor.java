@@ -32,7 +32,7 @@ public class Predictor {
     public String cpuPowerMode = "LITE_POWER_HIGH";
     public String modelPath = "";
     public String modelName = "";
-    protected OCRPredictorNative paddlePredictor = null;
+    protected volatile OCRPredictorNative paddlePredictor = null;
     protected float inferenceTime = 0;
     // Only for object detection
     protected Vector<String> wordLabels = new Vector<String>();
@@ -240,6 +240,7 @@ public class Predictor {
         ArrayList<OcrResultModel> results = paddlePredictor.runImage(inputData, width, height, channels, inputImage);
         end = new Date();
         inferenceTime = (end.getTime() - start.getTime()) / (float) inferIterNum;
+
         List<OcrResult> ocrResults = postprocess(results);
         Log.i(TAG, "[stat] Preprocess Time: " + preprocessTime
                 + " ; Inference Time: " + inferenceTime + " ;Box Size " + results.size());
