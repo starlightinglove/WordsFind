@@ -108,25 +108,28 @@ public class MainActivity extends AppCompatActivity {
      * 找到所有文字
      */
     private void findAllwords() {
-        AppExecutors.getInstance().diskIO().execute(() -> {
-            try {
-                //文字识别返回文字内容及位置
-                List<OcrResult> rects = WordsFindManager.getInstance().runModel(template);
-                if (rects == null || rects.size() == 0) {
-                    return;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //文字识别返回文字内容及位置
+                    List<OcrResult> rects = WordsFindManager.getInstance().runModel(template);
+                    if (rects == null || rects.size() == 0) {
+                        return;
+                    }
+                    //画出位置来
+                    Bitmap bitmap1 = template.copy(Bitmap.Config.ARGB_8888, true);
+                    for (OcrResult ocrResult : rects) {
+                        FileUtil.drawRect(bitmap1, ocrResult.getRect(), Color.argb(200, 180, 52, 217));
+                    }
+                    AppExecutors.getInstance().mainThread().execute(() -> {
+                        ivBg.setImageBitmap(bitmap1);
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                //画出位置来
-                Bitmap bitmap1 = template.copy(Bitmap.Config.ARGB_8888, true);
-                for (OcrResult ocrResult : rects) {
-                    FileUtil.drawRect(bitmap1, ocrResult.getRect(), Color.argb(200, 180, 52, 217));
-                }
-                AppExecutors.getInstance().mainThread().execute(() -> {
-                    ivBg.setImageBitmap(bitmap1);
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        });
+        }).start();
     }
 
 

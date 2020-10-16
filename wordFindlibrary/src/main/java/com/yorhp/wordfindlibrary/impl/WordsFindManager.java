@@ -64,9 +64,14 @@ public class WordsFindManager {
      * @return
      */
     public synchronized List<OcrResult> runModel(Bitmap image) {
+        //释放资源
+        predictor.releaseModel();
+        //重新加载
+        loadModel(context);
         if (image != null && predictor.isLoaded()) {
             predictor.setInputImage(image);
-            return runModel();
+            List<OcrResult> results = predictor.runModel();
+            return results;
         }
         return null;
     }
@@ -84,7 +89,7 @@ public class WordsFindManager {
         if (image != null && predictor.isLoaded()) {
             predictor.setInputImage(image);
             List<Rect> rects = new ArrayList<>();
-            List<OcrResult> results = runModel();
+            List<OcrResult> results = runModel(image);
             if (results != null) {
                 for (OcrResult ocrResult : results) {
                     Log.i("WordsFindManager",ocrResult.getTxt());
@@ -121,19 +126,6 @@ public class WordsFindManager {
                 inputColorFormat,
                 inputShape, inputMean,
                 inputStd, scoreThreshold);
-    }
-
-    /**
-     * 运行文字识别
-     * @return
-     */
-    private synchronized List<OcrResult> runModel(){
-        List<OcrResult> results = predictor.runModel();
-        //释放资源
-        predictor.releaseModel();
-        //重新加载
-        loadModel(context);
-        return results;
     }
 
 
