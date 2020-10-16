@@ -109,3 +109,14 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 
+app/libs/
+wordFindlibrary/.cxx/cmake/debug/arm64-v8a/CMakeFiles/CMakeTmp/
+wordFindlibrary/.cxx/cmake/debug/armeabi-v7a/CMakeFiles/CMakeTmp/
+wordFindlibrary/.cxx/cmake/debug/armeabi-v7a/CMakeFiles/Native.dir/
+wordFindlibrary/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp/
+wordFindlibrary/.cxx/cmake/release/arm64-v8a/CMakeFiles/Native.dir/
+wordFindlibrary/.cxx/cmake/release/armeabi-v7a/CMakeFiles/CMakeTmp/
+wordFindlibrary/.cxx/cmake/release/armeabi-v7a/CMakeFiles/Native.dir/
+wordFindlibrary/libs/
+wordFindlibrary/src/androidTest/
+wordFindlibrary/src/test/
