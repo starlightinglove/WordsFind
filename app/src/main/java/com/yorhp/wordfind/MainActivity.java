@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ivBg = findViewById(R.id.ivBg);
         try {
-            template = BitmapFactory.decodeStream(getAssets().open("test3.png"));
+            template = BitmapFactory.decodeStream(getAssets().open("test2.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     //画出位置来
                     Bitmap bitmap1 = template.copy(Bitmap.Config.ARGB_8888, true);
                     for (OcrResult ocrResult : rects) {
+                        Log.i("识别到的文字：",ocrResult.getTxt());
                         FileUtil.drawRect(bitmap1, ocrResult.getRect(), Color.argb(200, 180, 52, 217));
                     }
                     AppExecutors.getInstance().mainThread().execute(() -> {

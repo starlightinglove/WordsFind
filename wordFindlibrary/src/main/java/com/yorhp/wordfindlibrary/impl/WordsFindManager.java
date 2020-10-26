@@ -27,7 +27,7 @@ public class WordsFindManager {
     private static final long[] inputShape = Utils.parseLongsFromString("1,3,960", ",");
     private static final float[] inputMean = Utils.parseFloatsFromString("0.485, 0.456, 0.406", ",");
     private static final float[] inputStd = Utils.parseFloatsFromString("0.229,0.224,0.225", ",");
-    private static final float scoreThreshold = 0.1F;
+    private float scoreThreshold = 0.8F;
 
     protected volatile Predictor predictor = new Predictor();
 
@@ -43,7 +43,7 @@ public class WordsFindManager {
      */
     public void init(Context context) {
         //loadModel(context);
-        this.context=context;
+        this.context = context;
     }
 
     /**
@@ -54,7 +54,6 @@ public class WordsFindManager {
     public static WordsFindManager getInstance() {
         return Holder.instace;
     }
-
 
 
     /**
@@ -77,21 +76,19 @@ public class WordsFindManager {
     }
 
 
-
-
-
     /**
      * 获取图片中的文字
+     *
      * @param image
      * @return
      */
-    public synchronized List<Rect> findWords(Bitmap image,String words) {
+    public synchronized List<Rect> findWords(Bitmap image, String words) {
         List<Rect> rects = new ArrayList<>();
         List<OcrResult> results = runModel(image);
         if (results != null) {
             for (OcrResult ocrResult : results) {
-                Log.i("WordsFindManager",ocrResult.getTxt());
-                if(ocrResult.getTxt().contains(words)){
+                Log.i("WordsFindManager", ocrResult.getTxt());
+                if (ocrResult.getTxt().contains(words)) {
                     rects.add(ocrResult.getRect());
                 }
             }
@@ -103,7 +100,7 @@ public class WordsFindManager {
     /**
      * 释放资源
      */
-    public void relese(){
+    public void relese() {
         predictor.releaseModel();
     }
 
@@ -125,5 +122,13 @@ public class WordsFindManager {
                 inputStd, scoreThreshold);
     }
 
+    /**
+     * 设置可信度
+     *
+     * @param scoreThreshold
+     */
+    public void setScoreThreshold(float scoreThreshold) {
+        this.scoreThreshold = scoreThreshold;
+    }
 
 }

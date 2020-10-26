@@ -37,7 +37,7 @@ public class Predictor {
     // Only for object detection
     protected Vector<String> wordLabels = new Vector<String>();
     protected String inputColorFormat = "BGR";
-    protected long[] inputShape = new long[]{1, 3, 960};
+    protected long[] inputShape = new long[]{1, 3, 1080};
     protected float[] inputMean = new float[]{0.485f, 0.456f, 0.406f};
     protected float[] inputStd = new float[]{1.0f / 0.229f, 1.0f / 0.224f, 1.0f / 0.225f};
     protected float scoreThreshold = 0.1f;
